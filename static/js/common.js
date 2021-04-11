@@ -7,8 +7,8 @@ $(function () {
 
     var dates = '';
     var s = '';
-    var shu = [];
-    var zhu = [];
+    var happy = [];
+    var study = [];
     for (var n = 0; n < 7; n++) {
         var date = new Date();
         var year, month, day;
@@ -25,22 +25,6 @@ $(function () {
     s = s.split(",").reverse();
     $('.next').val(s[7 - 1]);
     $('.pav').val(s[0]);
-    var s1 = s.toString();
-    // $.ajax({
-    //     url: 'data.json',
-    //     async: false,
-    //     type: 'GET',
-    //     data: {
-    //         date: s1
-    //     },
-    //     dataType: 'json',
-    //     success: function (data) {
-    //         for (var j = 0; j < data.data.length; j++) {
-    //             zhu.push(data.data[j].Registration_number);
-    //             shu.push(data.data[j].login_number)
-    //         }
-    //     }
-    // })
 
     $.ajax({
         url: 'data.json',
@@ -48,11 +32,10 @@ $(function () {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
-            
+
             for (var j = 0; j < s.length; j++) {
-                zhu.push(data[s[j]]);
-                shu.push(data[s[j]]);
+                study.push(data[s[j]]);
+                happy.push(24 - data[s[j]]);
             }
         }
     })
@@ -65,7 +48,7 @@ $(function () {
             trigger: 'axis'
         },
         legend: {
-            data: ['注册人数', '登录人数']
+            data: ['学习时长', '快乐时长']
         },
         grid: {
             left: '3%',
@@ -87,16 +70,16 @@ $(function () {
             type: 'value'
         },
         series: [{
-            name: '注册人数',
+            name: '学习时长',
             type: 'line',
             // stack: '花费',
-            data: zhu
+            data: study
         },
         {
-            name: '登录人数',
+            name: '快乐时长',
             type: 'line',
             // stack: '花费',
-            data: shu
+            data: happy
         },
         ]
     });
